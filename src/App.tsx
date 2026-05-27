@@ -3,6 +3,7 @@ import type { Todo } from "./types/Todo"
 import TodoForm from "./components/TodoForm";
 import {Moon, Sun} from "lucide-react"
 import { buttonStyle } from "./styles/ButtonStyle";
+import TodoTask from "./components/TodoTask";
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>(() => {
@@ -99,15 +100,16 @@ function App() {
   
   
   return(
-    <div className={`${darkMode ? "dark" : ""} bg-amber-100 h-screen dark:bg-gray-900 transition:bg duration-300`}>
+    <div className={`${darkMode ? "dark" : ""} pb-10 bg-amber-100 min-h-screen dark:bg-gray-900 transition:bg duration-300 `}>
       <div className="flex justify-end p-5">
         <button 
           onClick={() => setDarkMode(!darkMode)} 
-          className={`hover:border-blue-300 hover:translate-y-1 transition-all duration-300 flex cursor-pointer  w-10 h-10 items-center justify-center text-[#FF8303] ${buttonStyle}`}>
+          className={`bg-blue-50 dark:bg-[#242320] hover:border-red-500 dark:hover:border-blue-300 hover:translate-y-1 transition-all duration-300 flex cursor-pointer  w-10 h-10 items-center justify-center text-[#FF8303] ${buttonStyle}`}>
 
           {darkMode ? <Moon size={23} strokeWidth={3}/> : <Sun size={23} strokeWidth={3} />}
         </button>
       </div>
+      <h1 className="text-3xl font-bold text-center text-gray-700 dark:text-white transition:text duration-500">TO-DO List</h1>
       <TodoForm 
         handleAddTodo={handleAddTodo}
         title={title}
@@ -117,6 +119,17 @@ function App() {
         handleDeleteAll={handleDeleteAll}
         
       />
+
+      {todos.map(todo => (
+        <div>
+          <TodoTask 
+            todo={todo}
+            handleDelete={handleDelete}
+          />  
+        </div>
+      ))}
+
+      
     </div>
   )
 }
