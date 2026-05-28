@@ -6,11 +6,13 @@ import {X, Share2, BookOpenText, Pencil } from "lucide-react"
 
 type TodoTaskProps = {
     todo: Todo;
-    handleDelete: (id: number) => void
+    handleDelete: (id: number) => void;
+    handleCancel: () => void;
 }
 
-function TodoTask ({todo, handleDelete}: TodoTaskProps) {
+function TodoTask ({todo, handleDelete, handleCancel}: TodoTaskProps) {
     const [isSelected, setIsSelected] = useState<boolean>(false);
+    const [isRemoveTaskSelected, setIsRemoveTaskSelected] = useState<boolean>(false);
     return(
         <>         
                 <div onClick={() => setIsSelected(!isSelected)} className={`${buttonStyle} bg-blue-50 dark:bg-[#242320] transition-all duration-300 w-[70%] m-auto mt-8 h-[100px] flex items-center justify-between px-4`}>
@@ -22,9 +24,10 @@ function TodoTask ({todo, handleDelete}: TodoTaskProps) {
                             )}
                         </div>
                         <div className={`pr-2 flex items-center justify-center hover:-translate-y-1 hover:translate-x-0.5 transition-all duration-300 `}>
-                            <button className={`${buttonStyle} hover:border-red-500 dark:hover:border-blue-300 transition duration-300`} onClick={(e) => {
-                                e.stopPropagation(), 
-                                handleDelete(todo.id)}}>
+                            <button className={`${buttonStyle} hover:border-red-500 dark:hover:border-blue-300 transition duration-300 xl:p-2 2xl:p-2 cursor-pointer`} onClick={(e) => {
+                                e.stopPropagation();
+                                setIsRemoveTaskSelected(true);
+                            }}>
                                 <X color="#FF8303"/>
                             </button>
                         </div>
@@ -32,10 +35,50 @@ function TodoTask ({todo, handleDelete}: TodoTaskProps) {
                 </div>
                 
                     {isSelected && (
-                        <div className="flex justify-end gap-3 w-[70%] m-auto mt-2 text-gray-600 dark:text-white">
-                            <button className={`${buttonStyle} bg-blue-50 dark:bg-[#242320] p-1 hover:border-red-500 dark:hover:border-blue-300 hover:-translate-y-1 hover:translate-x-0.5 transition-all duration-300 cursor-pointer`}><Share2 /></button>
-                            <button className={`${buttonStyle} bg-blue-50 dark:bg-[#242320] p-1 hover:border-red-500 dark:hover:border-blue-300 hover:-translate-y-1 hover:translate-x-0.5 transition-all duration-300 cursor-pointer`}><BookOpenText  /></button>
-                            <button className={`${buttonStyle} bg-blue-50 dark:bg-[#242320] p-1 hover:border-red-500 dark:hover:border-blue-300 hover:-translate-y-1 hover:translate-x-0.5 transition-all duration-300 cursor-pointer`}><Pencil /></button>
+                        <div className="flex justify-end gap-3 w-[70%] m-auto mt-4 text-gray-600 dark:text-white">
+                            <button className={`${buttonStyle} bg-blue-50 dark:bg-[#242320] p-1 xl:p-2 2xl:p-4 hover:border-red-500 dark:hover:border-blue-300 hover:-translate-y-1 hover:translate-x-0.5 transition-all duration-300 cursor-pointer`}><Share2 /></button>
+
+                            <button className={`${buttonStyle} bg-blue-50 dark:bg-[#242320] p-1 xl:p-2 2xl:p-4 hover:border-red-500 dark:hover:border-blue-300 hover:-translate-y-1 hover:translate-x-0.5 transition-all duration-300 cursor-pointer`}><BookOpenText  /></button>
+
+                            <button className={`${buttonStyle} bg-blue-50 dark:bg-[#242320] p-1 xl:p-2 2xl:p-4 hover:border-red-500 dark:hover:border-blue-300 hover:-translate-y-1 hover:translate-x-0.5 transition-all duration-300 cursor-pointer`} ><Pencil /></button>
+                        </div>
+                    )}
+
+                    {isRemoveTaskSelected && (
+                        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center">
+                            <div className="relative bg-[#242320] rounded-lg shadow-xl w-full max-w-lg z-10 m-4">
+                                 <div className={`bg-amber-100 dark:bg-gray-900 transition:bg duration-300 p-10 ${buttonStyle}`}>
+                                         <p className="text-3xl text-center text-gray-700 font-bold dark:text-white">Deseja excluir essa tarefa?</p>
+                                     <div className="flex gap-4 justify-center pt-5">
+                                         <button className={`${buttonStyle} p-1 font-medium text-sm md:text-xl cursor-pointer
+                                            dark:text-white
+                                         md:hover:border-red-500
+                                         md:dark:hover:border-blue-50 
+                                           md:hover:translate-y-1 
+                                           transition-all 
+                                           duration-300`} onClick={() => {
+
+                                            handleCancel;
+                                            setIsRemoveTaskSelected(false);
+
+                                         }}>Cancelar</button>
+                                         <button className={`${buttonStyle} p-1 font-medium text-sm md:text-xl cursor-pointer
+                                            dark:text-white 
+                                            lg:hover:border-red-500 
+                                            lg:dark:hover:border-blue-50 
+                                            md:hover:translate-y-1 
+                                            transition-all 
+                                            duration-300`} onClick={() => {
+                                            handleDelete(todo.id);
+                                            setIsRemoveTaskSelected(false);
+                                         
+                                         } }>
+                                            Excluir Tarefa
+                                         </button>
+                                     </div>
+                                 </div>
+
+                            </div>
                         </div>
                     )}
                 

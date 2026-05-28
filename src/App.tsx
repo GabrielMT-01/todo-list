@@ -75,6 +75,7 @@ function App() {
     setTitle("");
     setDescription("");
     setEditingID(null);
+    
   }
 
   const handleDelete = (id: number) => {
@@ -104,12 +105,12 @@ function App() {
       <div className="flex justify-end p-5">
         <button 
           onClick={() => setDarkMode(!darkMode)} 
-          className={`bg-blue-50 dark:bg-[#242320] hover:border-red-500 dark:hover:border-blue-300 hover:translate-y-1 transition-all duration-300 flex cursor-pointer  w-10 h-10 items-center justify-center text-[#FF8303] ${buttonStyle}`}>
+          className={`bg-blue-50 dark:bg-[#242320] hover:border-red-500 dark:hover:border-blue-300 hover:translate-y-1 transition-all duration-300 flex cursor-pointer  w-10 h-10 items-center justify-center text-[#FF8303] 2xl:h-15 2xl:w-15 ${buttonStyle}`}>
 
           {darkMode ? <Moon size={23} strokeWidth={3}/> : <Sun size={23} strokeWidth={3} />}
         </button>
       </div>
-      <h1 className="text-3xl font-bold text-center text-gray-700 dark:text-white transition:text duration-500">TO-DO List</h1>
+      <h1 className="text-3xl xl:text-4xl 2xl:text-5xl mt-5 font-bold text-center text-gray-700 dark:text-white transition:text duration-500">TO-DO List</h1>
       <TodoForm 
         handleAddTodo={handleAddTodo}
         title={title}
@@ -125,6 +126,7 @@ function App() {
           <TodoTask 
             todo={todo}
             handleDelete={handleDelete}
+            handleCancel={handleCancel}
           />  
         </div>
       ))}
