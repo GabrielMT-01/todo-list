@@ -40,7 +40,7 @@ function App() {
       return;
     }
 
-    if (editingId) {
+    if (editingId !== null) {
       const updated = todos.map(todo => 
         todo.id === editingId ? {...todo, title, description} : todo
       )
@@ -127,6 +127,12 @@ function App() {
             todo={todo}
             handleDelete={handleDelete}
             handleCancel={handleCancel}
+            handleAddTodo={handleAddTodo}
+            handleEdit={handleEdit}
+            title={title}
+            setTitle={setTitle}
+            description={description}
+            setDescription={setDescription}
           />  
         </div>
       ))}
