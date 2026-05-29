@@ -149,7 +149,7 @@ function App() {
 
   const filterBtnClass = (active: boolean) =>
     `${buttonStyle} bg-blue-50 dark:bg-[#242320] px-3 py-2 sm:px-4 sm:py-2.5 font-medium text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 dark:text-white cursor-pointer hover:border-red-500 dark:hover:border-blue-300 sm:hover:translate-y-1 transition-all duration-300 touch-manipulation ${
-      active ? "border-[#FF8303] dark:border-blue-300" : ""
+      active ? "border-red-500 dark:border-blue-300" : ""
     }`;
 
   return(
