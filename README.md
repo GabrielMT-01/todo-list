@@ -18,11 +18,11 @@ Uma aplicação moderna de To-Do List desenvolvida com React, TypeScript e Tailw
 ↕️ Reordenar tarefas por drag-and-drop (acessível via teclado)
 
 🛠️ Tecnologias utilizadas
-React
-TypeScript
-TailwindCSS
-Vite
-Lucide React
+    React
+    TypeScript
+    TailwindCSS
+    Vite
+    Lucide React
 
 📸 Preview
 
