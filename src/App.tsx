@@ -3,7 +3,7 @@ import type { Todo } from "./types/Todo"
 import TodoForm from "./components/TodoForm";
 import {Moon, Sun} from "lucide-react"
 import { buttonStyle } from "./styles/ButtonStyle";
-import TodoTask from "./components/TodoTask";
+import TodoList from "./components/TodoList";
 
 type TodoFilter = "all" | "completed" | "pending";
 
@@ -131,6 +131,8 @@ function App() {
     setError("");
   }
 
+  const handleReorderTodos = (reordered: Todo[]) => setTodos(reordered);
+
   const filteredTodos = todos.filter((todo) => {
     if (filter === "completed") return todo.completed;
     if (filter === "pending") return !todo.completed;
@@ -219,25 +221,22 @@ function App() {
         </>
       )}
 
-      {filteredTodos.map(todo => (
-        <div
-          key={todo.id}
-          className={enteringTodoIds.has(todo.id) ? "animate-[task-enter_0.35s_ease-out_forwards]" : ""}
-        >
-          <TodoTask 
-            todo={todo}
-            handleDelete={handleDelete}
-            handleCancel={handleCancel}
-            handleAddTodo={handleAddTodo}
-            handleEdit={handleEdit}
-            handleToggleCompleted={handleToggleCompleted}
-            title={title}
-            setTitle={setTitle}
-            description={description}
-            setDescription={setDescription}
-          />  
-        </div>
-      ))}
+      <TodoList
+        todos={filteredTodos}
+        allTodos={todos}
+        filter={filter}
+        onReorder={handleReorderTodos}
+        enteringTodoIds={enteringTodoIds}
+        handleAddTodo={handleAddTodo}
+        title={title}
+        setTitle={setTitle}
+        description={description}
+        setDescription={setDescription}
+        handleDelete={handleDelete}
+        handleCancel={handleCancel}
+        handleEdit={handleEdit}
+        handleToggleCompleted={handleToggleCompleted}
+      />
 
       
     </div>

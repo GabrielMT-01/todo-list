@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { buttonStyle } from "../styles/ButtonStyle";
 import type { Todo } from "../types/Todo";
 import {X, Share2, BookOpenText, Pencil, Circle, CheckCircle2, Check } from "lucide-react"
@@ -16,9 +16,10 @@ type TodoTaskProps = {
     handleCancel: () => void;
     handleEdit: (todo: Todo) => void;
     handleToggleCompleted: (id: number) => void;
+    children?: (parts: { card: ReactNode; footer: ReactNode }) => ReactNode;
 }
 
-function TodoTask ({todo, handleDelete, handleCancel, handleEdit, handleAddTodo, title, description, setTitle, setDescription, handleToggleCompleted}: TodoTaskProps) {
+function TodoTask ({todo, handleDelete, handleCancel, handleEdit, handleAddTodo, title, description, setTitle, setDescription, handleToggleCompleted, children}: TodoTaskProps) {
     const [isSelected, setIsSelected] = useState<boolean>(false);
     const [isRemoveTaskSelected, setIsRemoveTaskSelected] = useState<boolean>(false);
     const [isEditSelected, setIsEditSelected] = useState<boolean>(false);
@@ -58,11 +59,10 @@ function TodoTask ({todo, handleDelete, handleCancel, handleEdit, handleAddTodo,
         }
     };
 
-    return(
-        <>         
+    const card = (
                 <div
                     onClick={() => setIsSelected(!isSelected)}
-                    className={`${buttonStyle} bg-blue-50 dark:bg-[#242320] transition-all duration-300 w-full max-w-2xl mx-auto px-4 mt-4 sm:mt-6 md:mt-8 min-h-[72px] sm:min-h-[88px] md:h-[100px] flex items-center justify-between gap-2 py-3 sm:py-0 cursor-pointer ${
+                    className={`${buttonStyle} bg-blue-50 dark:bg-[#242320] transition-all duration-300 w-full h-[72px] sm:h-[88px] md:h-[100px] flex items-center justify-between gap-2 py-3 sm:py-0 cursor-pointer ${
                         isSelected ? "border-[#FF8303] dark:border-blue-300" : ""
                     }`}
                 >
@@ -88,7 +88,7 @@ function TodoTask ({todo, handleDelete, handleCancel, handleEdit, handleAddTodo,
                             <button
                                 type="button"
                                 aria-label="Excluir tarefa"
-                                className={`${buttonStyle} ${btnBg} p-2 sm:p-2.5 hover:border-red-500 dark:hover:border-blue-300 transition duration-300 cursor-pointer touch-manipulation`}
+                                className={`${buttonStyle} ${btnBg} p-2 sm:p-2.5 hover:border-red-500 dark:hover:border-blue-300 transition duration-300 cursor-pointer touch-manipulation mr-5`}
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setIsRemoveTaskSelected(true);
@@ -98,9 +98,11 @@ function TodoTask ({todo, handleDelete, handleCancel, handleEdit, handleAddTodo,
                             </button>
                         </div>
                 </div>
-                
+    );
+
+    const footer = (
                     <div
-                        className={`flex justify-end flex-wrap gap-2 sm:gap-3 w-full max-w-2xl mx-auto px-4 overflow-hidden text-gray-600 dark:text-white transition-all duration-300 ease-out ${
+                        className={`flex justify-end flex-wrap gap-2 pr-5 pt-5 sm:gap-3 w-full overflow-hidden text-gray-600 dark:text-white transition-all duration-300 ease-out ${
                             isSelected
                                 ? "mt-3 sm:mt-4 max-h-24 opacity-100"
                                 : "mt-0 max-h-0 opacity-0 pointer-events-none"
@@ -156,7 +158,10 @@ function TodoTask ({todo, handleDelete, handleCancel, handleEdit, handleAddTodo,
                             <Pencil className="w-5 h-5 sm:w-6 sm:h-6" />
                         </button>
                     </div>
+    );
 
+    const modals = (
+                <>
                     <Modal
                         isOpen={isRemoveTaskSelected}
                         onClose={() => setIsRemoveTaskSelected(false)}
@@ -304,11 +309,25 @@ function TodoTask ({todo, handleDelete, handleCancel, handleEdit, handleAddTodo,
                             </div>
                         </form>
                     </Modal>
-                
+                </>
+    );
+
+    if (children) {
+        return (
+            <>
+                {children({ card, footer })}
+                {modals}
+            </>
+        );
+    }
+
+    return (
+        <>
+            {card}
+            {footer}
+            {modals}
         </>
-       
-        
-    )
+    );
 }
 
 export default TodoTask

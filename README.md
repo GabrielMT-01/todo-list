@@ -15,6 +15,8 @@ Uma aplicação moderna de To-Do List desenvolvida com React, TypeScript e Tailw
 🎨 Interface moderna com TailwindCSS
 🪄 Modais personalizados
 ⚡ Animações suaves e transições
+↕️ Reordenar tarefas por drag-and-drop (acessível via teclado)
+
 🛠️ Tecnologias utilizadas
 React
 TypeScript
